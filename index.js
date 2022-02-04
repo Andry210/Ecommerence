@@ -23,6 +23,13 @@ app.use('/api/v1/products',ProductsRouter);
 app.use('/api/v1/users',UserRouter)
 app.use('/api/v1/checkout',stripeRoute);
 app.use('/api/v1/carts',cartRoute)
-app.listen(process.env.PORT,() =>{
+
+app.use(express.static(path.join(__dirname, "/front-end/build")));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/front-end/build', 'index.html'));
+});
+
+app.listen(process.env.PORT || 8000,() =>{
     console.log(`Backend is running`)
 })
